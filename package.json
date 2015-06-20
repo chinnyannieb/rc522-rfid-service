@@ -1,0 +1,16 @@
+{
+  "name": "rc522-rfid-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.4",
+    "rc522-rfid": "sebastianpozoga/rc522-rfid",
+    "socket.io": "^1.3.5"
+  }
+}
