@@ -1,32 +1,49 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          testone
+# Provides:          rfid
 # Required-Start:    $local_fs
 # Required-Stop:     $local_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # X-Interactive:     false
-# Short-Description: Example init script
-# Description:       Start/stop an example script
+# Short-Description: Start rfid daemon at boot time
+# Description:       Enable rfid service provided by daemon.
 ### END INIT INFO
 
-DESC="test script"
-NAME=testone
+DESC="Enable rfid service provided by daemon."
+NAME=rfid
 #DAEMON=
 
 do_start()
 {
-   node /opt/services/rfid/rfid.js&
+   if $RFID_SERVICE_PID
+   then
+     echo "The process is run"
+     exit 1
+   fi
+   node /opt/services/rfid/rfid.js &
+   RFID_SERVICE_PID=$!
 }
 
 do_debug()
 {
-   node /opt/services/rfid/rfid.js --debug
+   if $RFID_SERVICE_PID
+   then
+     echo "The process is run (--debug)"
+     exit 1
+   fi
+   node /opt/services/rfid/rfid.js --debug &
+   RFID_SERVICE_PID=$!
 }
 
 do_stop()
 {
-   node /opt/services/rfid/rfid.js
+   if $RFID_SERVICE_PID
+   then
+     echo "No run process"
+     exit 1
+   fi
+   kill -9 $RFID_SERVICE_PID
 }
 
 
@@ -51,3 +68,4 @@ case "$1" in
 esac
 
 exit 0
+
