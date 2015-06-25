@@ -12,55 +12,63 @@
 
 DESC="Enable rfid service provided by daemon."
 NAME=rfid
+FILEPATH=/tmp/services/rfid
+LOGPATH=/var/log/rfid.log
 #DAEMON=
-
+  
 do_start()
 {
-   if $RFID_SERVICE_PID
-   then
-     echo "The process is run"
+   if [ -f $1 ]
+   then 
+     echo "The process is alredy run"
      exit 1
    fi
-   node /opt/services/rfid/rfid.js &
-   RFID_SERVICE_PID=$!
-}
+   node /opt/services/rfid/rfid.js >> $2 &
+   echo $! > $1
+   echo "Run RFID service with pid `cat $1`"   
+}  
+
 
 do_debug()
 {
-   if $RFID_SERVICE_PID
+      if [ -f $1 ]
    then
-     echo "The process is run (--debug)"
+     echo "The process is alredy run"
      exit 1
    fi
-   node /opt/services/rfid/rfid.js --debug &
-   RFID_SERVICE_PID=$!
+   node /opt/services/rfid/rfid.js --debug >> $2 &
+   echo $! > $1
+   echo "Run RFID service with pid `cat $1`"
 }
 
 do_stop()
 {
-   if $RFID_SERVICE_PID
+   echo $1
+   if [ ! -f $1 ]
    then
      echo "No run process"
      exit 1
    fi
-   kill -9 $RFID_SERVICE_PID
+   kill -9 `cat $1`
+   rm $1
 }
 
+#init data directory
+mkdir -p /tmp/services
 
 case "$1" in
    start)
-     do_start
+     do_start $FILEPATH $LOGPATH
      ;;
    stop)
-     do_stop
+     do_stop $FILEPATH $LOGPATH
      ;;
    debug)
-     do_stop
-     do_debug
+     do_debug $FILEPATH $LOGPATH
      ;;
    restart|reload|condrestart)
-     do_stop
-     do_start
+     do_stop $FILEPATH $LOGPATH
+     do_start $FILEPATH $LOGPATH
      ;;
    *)
      echo $"Usage: $0 {start|debug|stop|restart|reload|status}"
