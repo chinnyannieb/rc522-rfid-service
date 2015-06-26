@@ -6,10 +6,6 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-#build
-npm install
-bower install
-
 #install
 rm -rf /otp/services/rfid
 mkdir -p /opt/services/rfid

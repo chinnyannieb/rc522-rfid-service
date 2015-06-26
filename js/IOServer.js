@@ -1,7 +1,9 @@
 var server = require('socket.io'),
-    rc522 = require("rc522-rfid");
+    rc522 = require("rc522-rfid"),
+    logger = require("./logger");
 
 var IOServer = module.exports = function(config, app){
+    logger.log("init IOServer", [config, app]);
     this.init(config, app);
 };
 
@@ -10,9 +12,9 @@ IOServer.prototype.init = function(config, app){
 };
 
 IOServer.prototype.start = function(config, app){
-    //send rfc ids
+    logger.log("start IOServer");
     rc522(function(rfid){
-        console.log("rfid:", rfid);
+        logger.log("tap rfid", [rfid]);
         this.io.emit('tap', { rfid: 'rfid' });
     });
 };
