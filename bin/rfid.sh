@@ -12,7 +12,7 @@
 
 DESC="Enable rfid service provided by daemon."
 NAME=rfid
-FILEPATH=/tmp/services/rfid
+FILEPATH=/var/run/rfid
 LOGPATH=/var/log/rfid.log
 #DAEMON=
   
