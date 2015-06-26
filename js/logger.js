@@ -1,10 +1,13 @@
 
 module.exports.log = function(msg, args){
-    var i, out = [];
-    for(i=0; i<args.length; i++){
-        out.push(JSON.stringify(args[i]));
+    var i, out = [], argstr = "";
+    if(args) {
+        for(i=0; i<args.length; i++){
+            out.push(JSON.stringify(args[i]));
+        }
+        argstr = " " + out.join(", ");
     }
-    console.log(" *["+new Data()+"] "+msg+" "+args.join(", "));
+    console.log(" *["+new Date()+"] " + msg + argstr);
 }
 
 

@@ -1,5 +1,5 @@
 var vanilia = require("./js/vanilia"),
-    IOServer = require('./IOServer'),
+    IOServer = require('./js/IOServer'),
     args = {
         isDebug: false,
         configPath: "./config/config.json"
