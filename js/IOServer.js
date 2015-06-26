@@ -16,7 +16,7 @@ IOServer.prototype.start = function(config, app){
     logger.log("start IOServer");
     rc522(function(rfid){
         logger.log("tap rfid", [rfid]);
-        that.io.emit('tap', { rfid: 'rfid' });
+        that.io.emit('tap', { rfid: rfid });
     });
 };
 
