@@ -8,7 +8,7 @@ var IOServer = module.exports = function(config, app){
 };
 
 IOServer.prototype.init = function(config, app){
-    this.io = app ? server(app, config) : server(config);
+    this.io = app ? server(app, config) : server(config.port);
 };
 
 IOServer.prototype.start = function(config, app){
