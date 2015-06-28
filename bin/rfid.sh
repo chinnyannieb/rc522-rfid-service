@@ -23,7 +23,7 @@ do_start()
      echo "The process is alredy run"
      exit 1
    fi
-   sudo node /opt/services/rfid/rfid.js >> $2 &
+   sudo node /opt/services/rfid/rfid.js >>$2 2>&1 &
    echo $! > $1
    echo "Run RFID service with pid `cat $1`"   
 }  
@@ -36,7 +36,7 @@ do_debug()
      echo "The process is alredy run"
      exit 1
    fi
-   sudo node /opt/services/rfid/rfid.js --debug >> $2 &
+   sudo node /opt/services/rfid/rfid.js --debug >>$2 2>&1 &
    echo $! > $1
    echo "Run RFID service with pid `cat $1`"
 }
@@ -49,7 +49,7 @@ do_stop()
      echo "No run process"
      exit 1
    fi
-   sudo kill -9 `cat $1`
+   sudo kill -9 `cat $1` >>$2 2>&1 
    rm $1
 }
 
